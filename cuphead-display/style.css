@@ -1,0 +1,346 @@
+/* RESET */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+}
+
+body {
+    margin: 0;
+
+    background: #00ff00; /* verde puro para chroma key */
+
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+/* PERSONAGENS */
+
+#character-tab {
+    display: flex;
+    gap: 10px;
+    padding: 12px;
+}
+
+#character-tab button {
+    padding: 10px 20px;
+
+    background: #ffffff;
+
+    border: 2px solid #d9d9d9;
+    border-radius: 12px;
+
+    color: #222;
+    font-weight: bold;
+    font-size: 14px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 4px 10px rgba(0,0,0,.15);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        background .2s ease,
+        border-color .2s ease;
+}
+
+#character-tab button:hover {
+    background: #f5f5f5;
+
+    border-color: #ffffff;
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 8px 18px rgba(0,0,0,.25),
+        0 0 15px rgba(255,255,255,.8);
+}
+
+#character-tab button:active {
+    transform: translateY(1px);
+
+    background: #ebebeb;
+
+    box-shadow:
+        0 2px 6px rgba(0,0,0,.2);
+}
+
+/* BOTÃO CHALICE */
+#character-tab button:nth-child(1) {
+    background: #ffe58a;
+    border: 2px solid #e8cf6b;
+    color: #4a3d00;
+}
+
+/* BOTÃO CUPHEAD */
+#character-tab button:nth-child(2) {
+    background: #ffb3b3;
+    border: 2px solid #e28d8d;
+    color: #5a1a1a;
+}
+
+/* BOTÃO MUGMAN */
+#character-tab button:nth-child(3) {
+    background: #b8dcff;
+    border: 2px solid #8dbce8;
+    color: #14375a;
+}
+
+/* BINDS */
+
+/* BINDS */
+
+#binds-tab {
+    position: absolute;
+
+    top: 15px;
+    right: 15px;
+
+    width: 260px;
+
+    /* altura adaptável */
+    max-height: calc(100vh - 30px);
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    padding: 16px;
+
+    border-radius: 14px;
+
+    background: linear-gradient(
+        180deg,
+        rgba(35,35,35,.95),
+        rgba(20,20,20,.95)
+    );
+
+    border: 1px solid rgba(255,255,255,.08);
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.45),
+        inset 0 1px 0 rgba(255,255,255,.05);
+
+    color: white;
+
+    backdrop-filter: blur(6px);
+}
+
+/* SCROLLBAR */
+
+#binds-tab::-webkit-scrollbar {
+    width: 8px;
+}
+
+#binds-tab::-webkit-scrollbar-track {
+    background: rgba(255,255,255,.05);
+    border-radius: 10px;
+}
+
+#binds-tab::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,.2);
+    border-radius: 10px;
+}
+
+#binds-tab::-webkit-scrollbar-thumb:hover {
+    background: rgba(255,255,255,.35);
+}
+
+#binds-tab h2 {
+    margin-bottom: 12px;
+
+    font-size: 18px;
+    font-weight: bold;
+
+    color: #ffffff;
+
+    text-shadow: 0 0 8px rgba(255,255,255,.15);
+}
+
+.bind-row {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 10px;
+}
+
+.bind-row span {
+    font-size: 14px;
+    color: #d8d8d8;
+}
+
+/* INPUTS E BOTÕES */
+
+.bind-row input,
+.bind-row button {
+    width: 95px;
+
+    padding: 7px;
+
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 8px;
+
+    background: rgba(255,255,255,.06);
+
+    color: white;
+
+    text-align: center;
+    font-weight: bold;
+
+    transition:
+        background .2s ease,
+        border-color .2s ease,
+        transform .15s ease,
+        box-shadow .2s ease;
+}
+
+.bind-row input:hover,
+.bind-row button:hover {
+    background: rgba(255,255,255,.12);
+
+    border-color: rgba(255,255,255,.2);
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 4px 10px rgba(0,0,0,.25),
+        0 0 10px rgba(255,255,255,.08);
+}
+
+.bind-row input:focus {
+    outline: none;
+
+    border-color: #5aa9ff;
+
+    box-shadow:
+        0 0 12px rgba(90,169,255,.35);
+}
+
+/* LINHA DIVISÓRIA */
+
+hr {
+    border: none;
+
+    height: 1px;
+
+    background: rgba(255,255,255,.08);
+
+    margin: 16px 0;
+}
+
+/* DISPLAY */
+
+#display {
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 20px;
+}
+
+/* ESQUERDA */
+
+#left-side {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.misc-slot {
+    width: 70px;
+    height: 70px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.misc {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    image-rendering: pixelated;
+}
+
+/* BOTÕES */
+
+#character-buttons {
+    display: grid;
+
+    grid-template-columns: repeat(2, 90px);
+
+    gap: 10px;
+}
+
+.button-slot {
+    width: 90px;
+    height: 90px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.button {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    image-rendering: pixelated;
+}
+
+/* DPAD */
+
+#dpad {
+    position: relative;
+
+    width: 140px;
+    height: 140px;
+}
+
+.arrow {
+    position: absolute;
+
+    width: 60px;
+
+    image-rendering: pixelated;
+}
+
+#up {
+    top: 0;
+    left: 40px;
+}
+
+#left {
+    top: 40px;
+    left: 0;
+}
+
+#right {
+    top: 40px;
+    right: 0;
+}
+
+#down {
+    bottom: 0;
+    left: 40px;
+}
