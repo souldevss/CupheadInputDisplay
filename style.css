@@ -12,7 +12,6 @@
   --gap: 12px;
   --radius: 4px;
   --press-scale: .8;
-  --bg: transparent;
   --panel: #333;
   --input: #444;
   --border: #555;
@@ -21,21 +20,35 @@
   --text-muted: #ddd;
 }
 
-html, body {
+html,
+body {
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
 
 body {
-  background: var(--bg);
+  position: relative;
+  background: transparent;
   font: 14px Arial, sans-serif;
   color: var(--text);
-  border: 1px solid rgba(255, 255, 255, 0.2); 
-  border-radius: 8px; 
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
   -webkit-user-select: none;
   user-select: none;
+}
+
+/* Fundo animado */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: #14171b;
+  opacity: .5;
+  transition: opacity .3s ease;
+  pointer-events: none;
+  z-index: -1;
 }
 
 .barra-titulo {
@@ -46,14 +59,14 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 0 15px;
-  -webkit-app-region: drag; 
+  -webkit-app-region: drag;
   opacity: 1;
   transform: none;
   transition: opacity .3s ease, transform .3s ease;
 }
 
 .botoes-janela {
-  -webkit-app-region: no-drag; 
+  -webkit-app-region: no-drag;
 }
 
 .botao-fechar {
@@ -62,7 +75,7 @@ body {
   color: white;
   width: 28px;
   height: 28px;
-  border-radius: 50%; 
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -73,18 +86,15 @@ body {
   transition: background 0.2s ease, transform 0.1s ease;
 }
 
-/* Efeito visual ao passar o mouse */
 .botao-fechar:hover {
   background: #c0392b;
   transform: scale(1.05);
 }
 
-/* Efeito visual ao clicar */
 .botao-fechar:active {
   transform: scale(0.95);
 }
 
-/* Quando o usuário passa o mouse perto do overlay, a borda do app brilha */
 body:hover {
   border-color: rgba(90, 169, 255, 0.6);
   box-shadow: inset 0 0 8px rgba(90, 169, 255, 0.2);
@@ -107,7 +117,7 @@ img {
 }
 
 #controls {
-  display: contents; 
+  display: contents;
 }
 
 #display {
@@ -149,8 +159,8 @@ img {
   color: var(--text-muted);
 }
 
-/* Bloqueia o arrasto nos campos de digitação para permitir que o usuário configure */
-.bind-row input, .bind-row button {
+.bind-row input,
+.bind-row button {
   width: 90px;
   padding: 6px;
   border: 1px solid var(--input-border);
@@ -160,7 +170,7 @@ img {
   font: bold 13px Arial, sans-serif;
   text-align: center;
   cursor: pointer;
-  -webkit-app-region: no-drag; 
+  -webkit-app-region: no-drag;
 }
 
 .bind-row input:focus {
@@ -183,13 +193,15 @@ hr {
   height: var(--slot-size);
 }
 
-.misc, .button {
+.misc,
+.button {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
 
-.misc.pressed, .button.pressed {
+.misc.pressed,
+.button.pressed {
   transform: scale(var(--press-scale));
 }
 
@@ -212,21 +224,49 @@ hr {
   object-fit: contain;
 }
 
-#up, #down {
+#up,
+#down {
   left: 50%;
   transform: translateX(-50%);
 }
 
-#up { top: 0; }
-#down { bottom: 0; }
-#left, #right { top: 50%; transform: translateY(-50%); }
-#left { left: 0; }
-#right { right: 0; }
+#up {
+  top: 0;
+}
 
-#up.pressed { transform: translateX(-50%) scale(var(--press-scale)); }
-#down.pressed { transform: translateX(-50%) scale(var(--press-scale)); }
-#left.pressed { transform: translateY(-50%) scale(var(--press-scale)); }
-#right.pressed { transform: translateY(-50%) scale(var(--press-scale)); }
+#down {
+  bottom: 0;
+}
+
+#left,
+#right {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#left {
+  left: 0;
+}
+
+#right {
+  right: 0;
+}
+
+#up.pressed {
+  transform: translateX(-50%) scale(var(--press-scale));
+}
+
+#down.pressed {
+  transform: translateX(-50%) scale(var(--press-scale));
+}
+
+#left.pressed {
+  transform: translateY(-50%) scale(var(--press-scale));
+}
+
+#right.pressed {
+  transform: translateY(-50%) scale(var(--press-scale));
+}
 
 /* -------------------------------------------------------------
    SISTEMA DE ANIMAÇÃO DA INTERFACE (IN / OUT COORDENADOS)
@@ -255,6 +295,10 @@ body.ui-hidden .barra-titulo {
   pointer-events: none;
 }
 
+body.ui-hidden::before {
+  opacity: 0;
+}
+
 /* Estado de Transição Inicial (Momento do Clique) */
 body.ui-showing #binds-tab {
   opacity: 0;
@@ -273,6 +317,10 @@ body.ui-showing .barra-titulo {
   transform: translateY(-30px);
 }
 
+body.ui-showing::before {
+  opacity: 0;
+}
+
 /* Estado de Ativação Concluída (Interface Visível) */
 body.ui-showing.ui-show-active #binds-tab {
   opacity: 1;
@@ -288,6 +336,10 @@ body.ui-showing.ui-show-active #character-select {
 body.ui-showing.ui-show-active .barra-titulo {
   opacity: 1;
   transform: none;
+}
+
+body.ui-showing.ui-show-active::before {
+  opacity: .5;
 }
 
 /* Base de posicionamento estável para os componentes de controle */
