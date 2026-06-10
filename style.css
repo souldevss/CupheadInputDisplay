@@ -36,6 +36,56 @@ body {
   border-radius: 8px; 
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
+        .barra-titulo {
+            height: 40px;
+            background-color: #2c3e50;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 15px;
+            
+            -webkit-app-region: drag; 
+        }
+
+        .botoes-janela {
+            -webkit-app-region: no-drag; 
+        }
+
+.botao-fechar {
+    background: #e74c3c;
+    border: none;
+    color: white;
+    
+    /* Faz o botão ser um círculo perfeito */
+    width: 28px;
+    height: 28px;
+    border-radius: 50%; 
+    
+    /* Alinha o "X" perfeitamente no centro */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-family: sans-serif;
+    font-weight: bold;
+    
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
+}
+
+/* Efeito visual ao passar o mouse */
+.botao-fechar:hover {
+    background: #c0392b; /* Vermelho mais escuro */
+    transform: scale(1.05); /* Aumenta levemente */
+}
+
+/* Efeito visual ao clicar */
+.botao-fechar:active {
+    transform: scale(0.95); /* Encolhe levemente */
+}
+
+
 
 /* Quando o usuário passa o mouse perto do overlay, a borda do app brilha */
 body:hover {
@@ -48,6 +98,9 @@ img {
   image-rendering: pixelated;
 }
 
+
+
+
 /* CORREÇÃO DO GRID: O grid agora olha para o #controls e para o #display */
 #app {
   display: grid;
@@ -57,7 +110,6 @@ img {
   width: 100%;
   height: 100%;
   padding: var(--gap);
-  -webkit-app-region: drag; /* Permite arrastar a janela por qualquer área vazia */
 }
 
 #controls {
@@ -250,7 +302,7 @@ body.ui-showing.ui-show-active #binds-tab {
 }
 
 .pressed {
-  filter: brightness(0.7);
+  filter: brightness(0.5);
   transform: scale(0.97);
   transition: filter .05s ease, transform .05s ease;
 }

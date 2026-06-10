@@ -19,6 +19,7 @@
     "asar": true,
     "npmRebuild": true,
     "win": {
+      "icon": "assets/cupbr.ico",
       "target": [
         "portable"
       ]
