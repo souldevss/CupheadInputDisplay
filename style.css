@@ -1,0 +1,266 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --slot-size: 72px;
+  --misc-size: 66px;
+  --dpad-size: 110px;
+  --arrow-size: 46px;
+  --gap: 12px;
+  --radius: 4px;
+  --press-scale: .8;
+  --bg: transparent;
+  --panel: #333;
+  --input: #444;
+  --border: #555;
+  --input-border: #666;
+  --text: #fff;
+  --text-muted: #ddd;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Aplica a borda ao redor de toda a janela do Electron e efeito de foco */
+body {
+  background: var(--bg);
+  font: 14px Arial, sans-serif;
+  color: var(--text);
+  border: 1px solid rgba(255, 255, 255, 0.2); 
+  border-radius: 8px; 
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Quando o usuário passa o mouse perto do overlay, a borda do app brilha */
+body:hover {
+  border-color: rgba(90, 169, 255, 0.6);
+  box-shadow: inset 0 0 8px rgba(90, 169, 255, 0.2);
+}
+
+img {
+  display: block;
+  image-rendering: pixelated;
+}
+
+/* CORREÇÃO DO GRID: O grid agora olha para o #controls e para o #display */
+#app {
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  grid-template-areas: "display controls";
+  gap: var(--gap);
+  width: 100%;
+  height: 100%;
+  padding: var(--gap);
+  -webkit-app-region: drag; /* Permite arrastar a janela por qualquer área vazia */
+}
+
+#controls {
+  grid-area: controls;
+  display: contents; /* Faz o header ficar invisível para o grid e passar o #binds-tab direto para a direita */
+}
+
+#display {
+  grid-area: display;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gap);
+  user-select: none;
+}
+
+#left-side {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#binds-tab {
+  max-height: calc(100vh - 24px);
+  overflow-y: auto;
+  padding: var(--gap);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--panel);
+}
+
+#binds-tab h2 {
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.bind-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.bind-row span {
+  color: var(--text-muted);
+}
+
+/* Bloqueia o arrasto nos campos de digitação para permitir que o usuário configure */
+.bind-row input, .bind-row button {
+  width: 90px;
+  padding: 6px;
+  border: 1px solid var(--input-border);
+  border-radius: 3px;
+  background: var(--input);
+  color: var(--text);
+  font: bold 13px Arial, sans-serif;
+  text-align: center;
+  cursor: pointer;
+  -webkit-app-region: no-drag; 
+}
+
+.bind-row input:focus {
+  outline: 2px solid #5aa9ff;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: var(--gap) 0;
+}
+
+.misc-slot {
+  width: var(--misc-size);
+  height: var(--misc-size);
+}
+
+.button-slot {
+  width: var(--slot-size);
+  height: var(--slot-size);
+}
+
+.misc, .button {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.misc.pressed, .button.pressed {
+  transform: scale(var(--press-scale));
+}
+
+#character-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, var(--slot-size));
+  gap: 8px;
+}
+
+#dpad {
+  position: relative;
+  width: var(--dpad-size);
+  height: var(--dpad-size);
+}
+
+.arrow {
+  position: absolute;
+  width: var(--arrow-size);
+  height: var(--arrow-size);
+  object-fit: contain;
+}
+
+#up, #down {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#up { top: 0; }
+#down { bottom: 0; }
+#left, #right { top: 50%; transform: translateY(-50%); }
+#left { left: 0; }
+#right { right: 0; }
+
+#up.pressed { transform: translateX(-50%) scale(var(--press-scale)); }
+#down.pressed { transform: translateX(-50%) scale(var(--press-scale)); }
+#left.pressed { transform: translateY(-50%) scale(var(--press-scale)); }
+#right.pressed { transform: translateY(-50%) scale(var(--press-scale)); }
+
+/* Esconde a aba de configurações quando a classe ui-hidden for injetada */
+body.ui-hidden #app {
+  grid-template-columns: 1fr;
+  grid-template-areas: "display";
+}
+
+body.ui-hidden #binds-tab {
+  display: none;
+}
+
+body.ui-showing #binds-tab {
+  opacity: 0;
+  transform: translateX(var(--gap));
+  transition: opacity .3s ease, transform .3s ease;
+}
+
+body.ui-showing.ui-show-active #binds-tab {
+  opacity: 1;
+  transform: none;
+}
+
+#bottom-bar {
+  position: fixed;
+  bottom: var(--gap);
+  left: var(--gap);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Bloqueia o arrasto nos botões inferiores para aceitarem os cliques do mouse */
+.config-btn, .char-btn, .plane-btn {
+  padding: 0;
+  background: 0;
+  cursor: pointer;
+  -webkit-app-region: no-drag; 
+}
+
+.config-btn, .plane-btn {
+  border: 0;
+}
+
+.char-btn {
+  border: 2px solid transparent;
+  border-radius: var(--radius);
+}
+
+.config-btn img, .char-btn img {
+  width: 48px;
+  height: auto;
+}
+
+.config-btn.config-open img {
+  opacity: .85;
+}
+
+#character-select {
+  display: flex;
+  gap: 6px;
+}
+
+.char-btn.active {
+  border-color: var(--panel);
+}
+
+.pressed {
+  filter: brightness(0.7);
+  transform: scale(0.97);
+  transition: filter .05s ease, transform .05s ease;
+}
+
+@media(max-width: 700px) {
+  #app {
+    grid-template-columns: 1fr;
+    grid-template-areas: "display" "controls";
+  }
+  #binds-tab {
+    max-height: 40vh;
+  }
+}
