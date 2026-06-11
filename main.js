@@ -7,7 +7,7 @@ const vLauncher = new GlobalKeyboardListener();
 function createWindow () {
   win = new BrowserWindow({
     width: 800,  // Ajuste para o tamanho real do seu layout de Cuphead
-    height: 600,
+    height: 400,
     frame: false,
     transparent: true,
     alwaysOnTop: true,

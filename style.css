@@ -283,7 +283,8 @@ body.ui-hidden #binds-tab {
 }
 
 body.ui-hidden #plane-toggle,
-body.ui-hidden #character-select {
+body.ui-hidden #character-select,
+body.ui-hidden #config-wrapper {
   opacity: 0;
   transform: translateY(30px);
   pointer-events: none;
@@ -307,7 +308,8 @@ body.ui-showing #binds-tab {
 }
 
 body.ui-showing #plane-toggle,
-body.ui-showing #character-select {
+body.ui-showing #character-select,
+body.ui-showing #config-wrapper {
   opacity: 0;
   transform: translateY(30px);
 }
@@ -328,7 +330,8 @@ body.ui-showing.ui-show-active #binds-tab {
 }
 
 body.ui-showing.ui-show-active #plane-toggle,
-body.ui-showing.ui-show-active #character-select {
+body.ui-showing.ui-show-active #character-select,
+body.ui-showing.ui-show-active #config-wrapper {
   opacity: 1;
   transform: none;
 }
@@ -344,7 +347,8 @@ body.ui-showing.ui-show-active::before {
 
 /* Base de posicionamento estável para os componentes de controle */
 #plane-toggle,
-#character-select {
+#character-select,
+#config-wrapper {
   opacity: 1;
   transform: none;
   transition: opacity .3s ease, transform .3s ease;
@@ -360,6 +364,30 @@ body.ui-showing.ui-show-active::before {
   align-items: center;
   gap: 8px;
 }
+
+/* Config bind */
+#config-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+
+  position: relative;
+  top: -10px;
+}
+
+#config-bind-text {
+  font-size: 11px;
+  font-weight: bold;
+  color: white;
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+#config-toggle {
+  pointer-events: none;
+}
+
 
 .config-btn, .char-btn, .plane-btn {
   padding: 0;
@@ -384,6 +412,31 @@ body.ui-showing.ui-show-active::before {
 
 .config-btn.config-open img {
   opacity: .85;
+}
+
+#config-bind-text {
+  font-size: 12px;
+  font-weight: 900;
+  color: white;
+
+  text-shadow:
+    2px 0 #000,
+   -2px 0 #000,
+    0 2px #000,
+    0 -2px #000,
+    1px 1px #000,
+   -1px -1px #000,
+    1px -1px #000,
+   -1px 1px #000;
+}
+
+#config-toggle img {
+  border: 2px solid white;
+  border-radius: 8px;
+
+  box-shadow:
+    0 0 0 2px black,
+    0 0 10px rgba(255,255,255,.4);
 }
 
 #character-select {

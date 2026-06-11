@@ -302,39 +302,36 @@ function handleKey(e, state) {
         keyboardMisc.swap = state;
     }
 }
-
-// --- Suas linhas originais que já existem no arquivo ---
 document.addEventListener("keydown", e=>{handleKey(e,!0)});
 document.addEventListener("keyup", e=>{handleKey(e,!1)});
 
-// --- COLE ESTE BLOCO LOGO ABAIXO DELAS ---
 try {
     const { ipcRenderer } = require('electron');
-    
-    ipcRenderer.on('global-key', (event, data) => {
-        // Cria um evento falso com o formato que a sua função handleKey precisa
-        const fakeEvent = { code: data.code };
-        
-        // 1. Atualiza o estado interno da tabela de teclas (ex: keyboardButtons ou keyboard)
-        if (keyMap[data.code]) {
-            const [name, targetMap] = keyMap[data.code];
-            targetMap[name] = data.isDown;
+
+    let f1Held = false;
+
+    ipcRenderer.on('global-key', (_, data) => {
+
+        if (data.code === 'F1') {
+
+            if (data.isDown && !f1Held) {
+                f1Held = true;
+                toggleConfig();
+            }
+
+            if (!data.isDown) {
+                f1Held = false;
+            }
+
+            return;
         }
-        // 2. Trata os casos especiais do seu script que ficam fora do keyMap (lock e swap)
-        if (data.code === keybinds.lock) {
-            keyboardMisc.lock = data.isDown;
-        }
-        if (data.code === keybinds.swap) {
-            keyboardMisc.swap = data.isDown;
-        }
-        
-        // 3. Executa a sua função original para atualizar os sprites e o visual na tela
-        handleKey(fakeEvent, data.isDown);
+
+        handleKey({ code: data.code }, data.isDown);
     });
+
 } catch (err) {
     console.log("Rodando fora do Electron, usando apenas o teclado padrão do navegador.");
 }
-
 
 // Gamepad input
 

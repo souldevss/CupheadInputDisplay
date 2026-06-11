@@ -145,9 +145,14 @@
         </main>
 
         <div id="bottom-bar">
-            <button id="config-toggle" class="config-btn" type="button" onclick="toggleConfig()" title="Show or hide configuration" aria-pressed="true">
-                <img src="assets/config.png" alt="Config">
-            </button>
+            
+            <div id="config-wrapper">
+                <span id="config-bind-text">F1</span>
+
+                <button id="config-toggle" class="config-btn" type="button">
+                    <img src="assets/config.png" alt="Config">
+                </button>
+            </div>
 
             <nav id="character-select">
                 <button type="button" class="char-btn" data-character="Cuphead" onclick="changeCharacter('Cuphead')" title="Cuphead">
